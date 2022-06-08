@@ -52,7 +52,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
 }
@@ -97,9 +97,10 @@ static void render_logo(void) {
     oled_write_raw_P(oled_logo, ANIM_SIZE);
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     //render_name();
     oled_set_cursor(0,0);
     render_logo();
+    return false;
 }
 #endif

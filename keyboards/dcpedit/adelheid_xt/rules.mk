@@ -20,4 +20,4 @@ COMMAND_ENABLE = no         # Commands for debug and configuration
 SLEEP_LED_ENABLE = no       # Breathing sleep LED during USB suspend
 AUDIO_ENABLE = no           # Audio output
 ENCODER_ENABLE = yes
-OLED_DRIVER_ENABLE = yes
+OLED_ENABLE = yes
