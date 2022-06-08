@@ -21,28 +21,23 @@
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xDC9E
-#define PRODUCT_ID      0x12ED
+#define PRODUCT_ID      0xAD87
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    dcpedit
-#define PRODUCT         redherring
+#define MANUFACTURER    DCPEdit
+#define PRODUCT         AdelheidXT
 
 /* key matrix size */
-#define MATRIX_ROWS 6
-#define MATRIX_COLS 15
+#define MATRIX_ROWS 12
+#define MATRIX_COLS 12
 
 /* key matrix pins */
-#define MATRIX_ROW_PINS { C6, A6, A7, A4, C7, A5 }
-#define MATRIX_COL_PINS { A1, A2, A3, B0, B1, B2, B3, B4, D0, D1, D5, D6, C5, C4, C3 }
+#define MATRIX_ROW_PINS { B5, B8, B9, A0, A1, A2, A3, A4, A5, A6, A7, B0 }
+#define MATRIX_COL_PINS { B12, B13, B14, B15, A8, A15, B3, B4, C14, C15, B1, B10 }
 #define UNUSED_PINS
 
-/* Indicator LEDs */
-#define LED_CAPS_LOCK_PIN   A0
-#define SOLENOID_PIN   B5
-
 /* encoder pins */
-#define ENCODERS_PAD_A { C2 }
-#define ENCODERS_PAD_B { D7 }
-#define ENCODER_DIRECTION_FLIP
+#define ENCODERS_PAD_A { A13 }
+#define ENCODERS_PAD_B { A14 }
 
 /* encoder resolution */
 #define ENCODER_RESOLUTION 4
@@ -59,25 +54,3 @@
 
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
-#define BOOTMAGIC_LITE_ROW 0
-#define BOOTMAGIC_LITE_COLUMN 0
-
-/* OLED DRIVER CONFIG */
-/* Merged from: https://github.com/qmk/qmk_firmware/compare/master...sigprof:oled-driver-new-hardware-support-v2 */
-#define OLED_DISPLAY_CUSTOM
-#define OLED_DISPLAY_WIDTH 64
-#define OLED_DISPLAY_HEIGHT 128
-#define OLED_COM_PIN_OFFSET 32
-#define OLED_MATRIX_SIZE (OLED_DISPLAY_HEIGHT / 8 * OLED_DISPLAY_WIDTH)
-#define OLED_BLOCK_TYPE uint16_t
-#define OLED_SOURCE_MAP { 0, 8, 16, 24, 32, 40, 48, 56 }
-#define OLED_TARGET_MAP { 56, 48, 40, 32, 24, 16, 8, 0 }
-#define OLED_BLOCK_COUNT (sizeof(OLED_BLOCK_TYPE) * 8)
-#define OLED_BLOCK_SIZE (OLED_MATRIX_SIZE / OLED_BLOCK_COUNT)
-#define OLED_COM_PINS COM_PINS_ALT
-#define OLED_IC OLED_IC_SH1107
-#define OLED_BRIGHTNESS 30
-/*
-#define OLED_TIMEOUT 15000
-#define OLED_UPDATE_INTERVAL 200
-*/
