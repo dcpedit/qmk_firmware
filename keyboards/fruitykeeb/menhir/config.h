@@ -17,3 +17,5 @@
 
 /* Hold tap config */
 #define QUICK_TAP_TERM 0
+#define TAPPING_TERM 300
+#define PERMISSIVE_HOLD
