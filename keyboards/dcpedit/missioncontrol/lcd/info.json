@@ -1,0 +1,13 @@
+{
+    "features": {
+        "backlight": true,
+        "quantum_painter": true
+    },
+    "backlight": {
+        "pin": "A10",
+        "levels": 5,
+        "default": {
+            "brightness": 3
+        }
+    }
+}
