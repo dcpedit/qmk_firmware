@@ -16,10 +16,10 @@ void keyboard_post_init_kb(void) {
     wait_ms(150);
 
     // Initialise the LCD
-    lcd = qp_ili9488_make_spi_device(320, 480, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);
+    lcd = qp_ili9341_make_spi_device(240, 320, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);
     qp_init(lcd, QP_ROTATION_180);
 
-    #ifdef LCD_INVERT_COLOUR
+    #ifdef LCD_INVERT_COLOR
     qp_comms_start(lcd);
     qp_comms_command(lcd, ILI9XXX_CMD_INVERT_ON);
     qp_comms_stop(lcd);

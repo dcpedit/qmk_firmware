@@ -4,7 +4,7 @@
 #pragma once
 
 /* LCD config */
-#define LCD_INVERT_COLOUR true
+//#define LCD_INVERT_COLOR true
 #define LCD_DC_PIN A13    // data/command
 #define LCD_CS_PIN A4     // chip select
 #define LCD_RST_PIN A14   // reset
@@ -19,4 +19,5 @@
 #define SPI_MISO_PIN NO_PIN
 
 #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0 // milliseconds
-#define QUANTUM_PAINTER_SUPPORTS_256_PALETTE TRUE
+// #define QUANTUM_PAINTER_SUPPORTS_256_PALETTE TRUE
+#define QUANTUM_PAINTER_SUPPORTS_NATIVE_COLORS TRUE
