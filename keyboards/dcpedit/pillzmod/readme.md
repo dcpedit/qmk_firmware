@@ -1,7 +1,5 @@
 # Pillz Mod
 
-![Keyboard](https://i.imgur.com/1ZAMhn9.jpeg)
-
 Pillz Mod is a replacement PCB for the Kinesis Advantage/Contoured keyboard
 
 * Keyboard Maintainer: [dcpedit](https://github.com/dcpedit)
