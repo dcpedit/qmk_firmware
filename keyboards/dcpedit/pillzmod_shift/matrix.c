@@ -98,55 +98,50 @@ static inline void write_to_cols_dynamic(uint8_t col) {
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
-    static matrix_row_t temp_matrix[MATRIX_ROWS] = {0};
-    static matrix_col_t temp_matrix_inverted[MATRIX_COLS] = {0};
+    bool matrix_has_changed = false;
 
     xprintf("START scan ======================================\n");
 
+    // Scan each column
     for (uint8_t col = 0; col < MATRIX_COLS; col++) {
         write_to_cols_dynamic(col);
+
         // Move data from latch to shift register
         write_and_wait_for_pin(latch_pin, 1);
         write_and_wait_for_pin(latch_pin, 0);
 
-        // Read each row pin
-        uint16_t temp_row_state = 0;
+        // Read each row pin and update `current_matrix` directly
         for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-            bool row_value = readPin(row_pins[row]); 
+            bool row_value = readPin(row_pins[row]);
+
             // Check if the row pin is low (key pressed)
+            uint16_t row_bit = (1 << col);  // Represents the current column's bit in the row
+
+            // If the row is pressed (row_value == 0) and current_matrix is not updated
             if (!row_value) {
-                temp_row_state |= (1 << row);  // Set the bit for this row in the row state
+                if (!(current_matrix[row] & row_bit)) {
+                    current_matrix[row] |= row_bit; // Set the bit for the column
+                    matrix_has_changed = true; // Mark matrix as changed
+                }
+            } else {
+                // If row is not pressed, and current_matrix was previously set
+                if (current_matrix[row] & row_bit) {
+                    current_matrix[row] &= ~row_bit; // Clear the bit
+                    matrix_has_changed = true; // Mark matrix as changed
+                }
             }
         }
 
-        temp_matrix_inverted[col] = temp_row_state;
-
-        //xprintf("Col %u - Row state: ", col);
-        //print_binary(temp_row_state, MATRIX_COLS); // Print 7 bits for 7 columns
-    }
-
-    // Transpose the inverted matrix to the normal matrix
-    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-        temp_matrix[row] = 0;  // Clear the row first
-
-        for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-            // Check if the bit for this row is set in the column
-            if (temp_matrix_inverted[col] & (1 << row)) {
-                temp_matrix[row] |= (1 << col);  // Set the bit in the normal matrix
-            }
+#ifdef DEBUG_ENABLE
+        // Print column scan debug info
+        xprintf("Col %u - Row state: ", col);
+        for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+            print_binary(current_matrix[row], MATRIX_COLS);
         }
-        xprintf("Row %u - col state: ", row);
-        print_binary(temp_matrix[row], MATRIX_ROWS);
-        //print_binary(current_matrix[row], MATRIX_ROWS);
+#endif
     }
 
-    bool matrix_has_changed = memcmp(current_matrix, temp_matrix, sizeof(temp_matrix)) != 0;
-
-    if (matrix_has_changed) {
-        xprintf("Matrix has changed!\n");
-        memcpy(current_matrix, temp_matrix, sizeof(temp_matrix));
-    }
-
+    // Optional wait time in debug mode
 #ifdef DEBUG_ENABLE
     wait_ms(3000);
 #endif
