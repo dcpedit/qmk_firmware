@@ -27,6 +27,10 @@
 //#define SPI_SCK_PIN  GPxx // e.g. SPI0 SCK
 //#define SPI_MOSI_PIN GPxx // e.g. SPI0 TX (Master Out, Slave In)
 //#define SPI_MISO_PIN GPxx // e.g. SPI0 RX (Master In, Slave Out)
+#ifdef SPI_MISO_PIN
+#undef SPI_MISO_PIN
+#endif
+#define SPI_MISO_PIN NO_PIN
 
 // GPIO config for CS/latch pins can be any GPIO
 #define SPI_MATRIX_LATCH_PIN B6
@@ -36,4 +40,6 @@
 #define MATRIX_COLS_SHIFT_REGISTER_COUNT 1
 #define ROWS_COUNT MATRIX_ROWS // this is set to match the number of GPIO rows
 
+// LED for layer indicator
+#define LED_LAYER_PIN F0
 //#define DEBUG_ENABLE 1
