@@ -18,15 +18,6 @@ typedef uint32_t matrix_col_t;
 static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static const pin_t latch_pin = SPI_MATRIX_LATCH_PIN;
 
-/*
-static void write_and_wait_for_pin(pin_t pin, uint8_t target_state) {
-    writePin(pin, target_state);  // Write the target state to the pin
-    while (readPin(pin) != target_state) {
-        wait_us(1);  // Wait 1 microsecond until the pin state matches the target state
-    }
-}
-*/
-
 static void write_and_wait_for_pin(pin_t pin, uint8_t target_state) {
     //writePin(pin, target_state);  // Write the target state to the pin
     if (target_state) {
@@ -50,7 +41,7 @@ void matrix_init_custom(void) {
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         setPinInput(row_pins[row]);
         // Enable internal pull-up resistors
-        setPinInputHigh(row_pins[row]);
+        // setPinInputHigh(row_pins[row]);
     }
 
     // Init latch pin
@@ -75,14 +66,14 @@ void print_binary(uint16_t value, uint8_t bits) {
 }
 
 static inline void write_to_cols_dynamic(uint8_t col) {
-    uint8_t message[MATRIX_COLS_SHIFT_REGISTER_COUNT] = {0xFF}; // Initialize all bits to '1'
+    uint8_t message[MATRIX_COLS_SHIFT_REGISTER_COUNT] = {0x00}; // Initialize all bits to '0'
 
-    // Calculate which register should get the '0' and shift it accordingly
+    // Calculate which register should get the '1' and shift it accordingly
     uint8_t register_index = col / 8;
     uint8_t bit_position = col % 8;
 
-    // Clear the correct bit in the appropriate shift register (set to '0')
-    message[register_index] &= ~(1 << bit_position);
+    // Set the correct bit in the appropriate shift register (set to '1')
+    message[register_index] |= (1 << bit_position);
 
     // Output the contents of the message array
     xprintf("Message contents for col %d: ", col);
@@ -92,9 +83,7 @@ static inline void write_to_cols_dynamic(uint8_t col) {
     xprintf("\n");
 
     // Transmit the message to the SPI bus
-    //spi_start(SPI_MATRIX_CHIP_SELECT_PIN_COLS, true, SPI_MODE, SPI_MATRIX_DIVISOR);
     spi_transmit(message, MATRIX_COLS_SHIFT_REGISTER_COUNT);
-    //spi_stop();
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
@@ -117,8 +106,8 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
             // Check if the row pin is low (key pressed)
             uint16_t row_bit = (1 << col);  // Represents the current column's bit in the row
 
-            // If the row is pressed (row_value == 0) and current_matrix is not updated
-            if (!row_value) {
+            // If the row is pressed (row_value == 1) and current_matrix is not updated
+            if (row_value) {
                 if (!(current_matrix[row] & row_bit)) {
                     current_matrix[row] |= row_bit; // Set the bit for the column
                     matrix_has_changed = true; // Mark matrix as changed
@@ -131,15 +120,16 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
                 }
             }
         }
+    }
 
 #ifdef DEBUG_ENABLE
-        // Print column scan debug info
-        xprintf("Col %u - Row state: ", col);
-        for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-            print_binary(current_matrix[row], MATRIX_COLS);
-        }
-#endif
+    // Print column scan debug info
+    //xprintf("Col %u - Row state: ", col);
+    xprintf("Current Matrix:\n");
+    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+        print_binary(current_matrix[row], MATRIX_COLS);
     }
+#endif
 
     // Optional wait time in debug mode
 #ifdef DEBUG_ENABLE

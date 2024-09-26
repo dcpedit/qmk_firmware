@@ -17,8 +17,7 @@
     "indicators": {
         "caps_lock": "D5",
         "num_lock": "C7",
-        "scroll_lock": "F1",
-        "on_state": 0
+        "scroll_lock": "F1"
     },
     "url": "https://github.com/dcpedit/pillzmod",
     "usb": {

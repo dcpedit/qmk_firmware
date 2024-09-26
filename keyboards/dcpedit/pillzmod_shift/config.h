@@ -35,3 +35,5 @@
 // custom matrix config
 #define MATRIX_COLS_SHIFT_REGISTER_COUNT 1
 #define ROWS_COUNT MATRIX_ROWS // this is set to match the number of GPIO rows
+
+//#define DEBUG_ENABLE 1
