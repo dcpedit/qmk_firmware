@@ -40,8 +40,9 @@ void matrix_init_custom(void) {
     // Initialize row pins as inputs
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         setPinInput(row_pins[row]);
-        // Enable internal pull-up resistors
-        // setPinInputHigh(row_pins[row]);
+        // setPinInputLow(row_pins[row]);
+        // Since AVR has no internal pull-down resistors,
+        // physical 10k resistors are required on each row pin
     }
 
     // Init latch pin
