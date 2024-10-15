@@ -11,10 +11,10 @@ void matrix_init_user(void) {
 // Initialize your default layer
 layer_state_t layer_state_set_user(layer_state_t state) {
   if (IS_LAYER_ON_STATE(state, NUM_LAYER)) {
-    writePinLow(LED_LAYER_PIN);
+    writePinHigh(LED_LAYER_PIN);
   }
   else {
-    writePinHigh(LED_LAYER_PIN);
+    writePinLow(LED_LAYER_PIN);
   }
 
   return state;
