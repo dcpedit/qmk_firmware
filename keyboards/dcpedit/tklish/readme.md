@@ -1,20 +1,20 @@
 # TKLish
 
-![Masonry](https://i.imgur.com/gqx2FZW.jpg)
+![TKLish](https://i.imgur.com/gqx2FZW.jpg)
 
-Masonry is a 40% ergoish columnar keyboard projected on a rectangular keyboard shape.
+The TKLish PCB mimics the look of a TKL layout
 
 * Keyboard Maintainer: [dcpedit](https://github.com/dcpedit)
 * Hardware Supported: STM32F072
-* Hardware Availability: https://github.com/dcpedit/masonry
+* Hardware Availability: https://github.com/dcpedit/tklish
 
 Make example for this keyboard (after setting up your build environment):
 
-    make dcpedit/masonry:default
+    make dcpedit/tklish:default
 
 Flashing example for this keyboard:
 
-    make dcpedit/masonry:default:flash
+    make dcpedit/tklish:default:flash
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 

@@ -10,11 +10,23 @@
     "features": {
         "bootmagic": true,
         "extrakey": true,
-        "mousekey": true
+        "mousekey": true,
+        "encoder": true
     },
     "matrix_pins": {
         "cols": ["A4", "A3", "A2", "A1", "A0", "F1", "F0", "B5"],
         "rows": ["B10", "B1", "A14", "A7", "B7", "C13", "B11", "B2", "B0", "A6", "B8", "B9"]
+    },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "B3", "pin_b": "B4"},
+            {"pin_a": "B3", "pin_b": "A15"},
+            {"pin_a": "B4", "pin_b": "A15"}
+        ]
+    },
+    "indicators": {
+        "caps_lock": "A5",
+        "scroll_lock": "B6"
     },
     "processor": "STM32F072",
     "url": "https://github.com/dcpedit/tklish",
