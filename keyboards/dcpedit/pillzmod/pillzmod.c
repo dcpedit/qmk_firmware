@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include "quantum.h"
 
-#define LED_LAYER_PIN A2
 #define NUM_LAYER     1
 
 void matrix_init_user(void) {

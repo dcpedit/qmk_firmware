@@ -14,3 +14,5 @@
 #ifdef AUDIO_ENABLE
 #define STARTUP_SONG SONG(STARTUP_SOUND)
 #endif
+
+#define LED_LAYER_PIN A2

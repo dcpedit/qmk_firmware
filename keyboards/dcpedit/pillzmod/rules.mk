@@ -1,1 +1,1 @@
-AUDIO_DRIVER = pwm_hardware
+DEFAULT_FOLDER = dcpedit/pillzmod/avr
