@@ -7,16 +7,6 @@
     "dynamic_keymap": {
         "layer_count": 2
     },
-    "features": {
-        "bootmagic": true,
-        "extrakey": true,
-        "mousekey": true,
-        "encoder": true
-    },
-    "matrix_pins": {
-        "cols": ["A4", "A3", "A2", "A1", "A0", "F1", "F0", "B5"],
-        "rows": ["B10", "B1", "A14", "A7", "B7", "C13", "B11", "B2", "B0", "A6", "B8", "B9"]
-    },
     "encoder": {
         "rotary": [
             {"pin_a": "B3", "pin_b": "B4"},
@@ -24,9 +14,19 @@
             {"pin_a": "B4", "pin_b": "A15"}
         ]
     },
+    "features": {
+        "bootmagic": true,
+        "encoder": true,
+        "extrakey": true,
+        "mousekey": true
+    },
     "indicators": {
         "caps_lock": "A5",
         "scroll_lock": "B6"
+    },
+    "matrix_pins": {
+        "cols": ["A4", "A3", "A2", "A1", "A0", "F1", "F0", "B5"],
+        "rows": ["B10", "B1", "A14", "A7", "B7", "C13", "B11", "B2", "B0", "A6", "B8", "B9"]
     },
     "processor": "STM32F072",
     "url": "https://github.com/dcpedit/tklish",
@@ -118,6 +118,7 @@
                 {"label": "10,6", "matrix": [10, 6], "x": 13.5, "y": 4.25, "w": 1.5},
                 {"label": "4,7", "matrix": [4, 7], "x": 16.25, "y": 4.25},
                 {"label": "5,0", "matrix": [5, 0], "x": 0, "y": 5.25, "w": 1.5},
+                {"label": "11,0", "matrix": [11, 0], "x": 1.5, "y": 5.25},
                 {"label": "5,1", "matrix": [5, 1], "x": 2.5, "y": 5.25},
                 {"label": "11,1", "matrix": [11, 1], "x": 3.5, "y": 5.25},
                 {"label": "5,2", "matrix": [5, 2], "x": 4.5, "y": 5.25},
@@ -128,6 +129,7 @@
                 {"label": "11,4", "matrix": [11, 4], "x": 9.5, "y": 5.25},
                 {"label": "5,5", "matrix": [5, 5], "x": 10.5, "y": 5.25},
                 {"label": "11,5", "matrix": [11, 5], "x": 11.5, "y": 5.25},
+                {"label": "5,6", "matrix": [5, 6], "x": 12.5, "y": 5.25},
                 {"label": "11,6", "matrix": [11, 6], "x": 13.5, "y": 5.25, "w": 1.5},
                 {"label": "5,7", "matrix": [5, 7], "x": 15.25, "y": 5.25},
                 {"label": "11,7", "matrix": [11, 7], "x": 16.25, "y": 5.25},
