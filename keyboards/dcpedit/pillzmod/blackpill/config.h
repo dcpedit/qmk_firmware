@@ -16,3 +16,4 @@
 #endif
 
 #define LED_LAYER_PIN A2
+#define LED_ACTIVE_LOW

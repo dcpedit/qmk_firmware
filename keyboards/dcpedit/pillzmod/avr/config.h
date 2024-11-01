@@ -30,7 +30,6 @@
 
 // GPIO config for CS/latch pins can be any GPIO
 #define SPI_MATRIX_LATCH_PIN B6
-#define SPI_MATRIX_CHIP_SELECT_PIN_COLS B0
 
 // custom matrix config
 #define MATRIX_COLS_SHIFT_REGISTER_COUNT 1
