@@ -29,8 +29,9 @@ static void __time_critical_func(write_and_wait_for_pin)(pin_t pin, uint8_t targ
 }
 
 void matrix_init_custom(void) {
-    // Initialize row pins as inputs
     wait_ms(500);
+
+    // Initialize row pins as inputs
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         setPinInput(row_pins[row]);
         setPinInputLow(row_pins[row]);
@@ -78,7 +79,9 @@ static inline void write_to_cols_dynamic(uint8_t col) {
     xprintf("\n");
 
     // Transmit the message to the SPI bus
+    spi_start(NO_PIN, true, SPI_MODE, SPI_MATRIX_DIVISOR);
     spi_transmit(message, MATRIX_COLS_SHIFT_REGISTER_COUNT);
+    spi_stop();
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
@@ -88,7 +91,6 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
     // Scan each column
     for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-        xprintf("loop index: %d\n", col);
         write_to_cols_dynamic(col);
 
         // Move data from latch to shift register
