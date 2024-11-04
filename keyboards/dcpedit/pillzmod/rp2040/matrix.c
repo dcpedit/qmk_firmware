@@ -2,7 +2,6 @@
 #include "print.h"
 #include "quantum.h"
 #include "spi_master.h"
-#include <util/delay.h>  // AVR-specific delay library
 
 #if (MATRIX_ROWS <= 8)
 typedef uint8_t matrix_col_t;
@@ -18,31 +17,23 @@ typedef uint32_t matrix_col_t;
 static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static const pin_t latch_pin = SPI_MATRIX_LATCH_PIN;
 
-static void write_and_wait_for_pin(pin_t pin, uint8_t target_state) {
-    //writePin(pin, target_state);  // Write the target state to the pin
-    if (target_state) {
-        writePinHigh(pin);
-    } else {
-        writePinLow(pin);
-    }
-
-    // Simple polling loop to wait until the pin reaches the target state
-    uint16_t timeout = 20000; // 20 ms timeout in microseconds
-    while (timeout--) {
+static void __time_critical_func(write_and_wait_for_pin)(pin_t pin, uint8_t target_state) {
+    writePin(pin, target_state);
+    rtcnt_t start = chSysGetRealtimeCounterX();
+    rtcnt_t end   = start + MS2RTC(REALTIME_COUNTER_CLOCK, 20);
+    while (chSysIsCounterWithinX(chSysGetRealtimeCounterX(), start, end)) {
         if (readPin(pin) == target_state) {
-            return;  // Pin has reached the target state, exit the function
+            return;
         }
-        _delay_us(1);  // Wait for 1 microsecond between checks
     }
 }
 
 void matrix_init_custom(void) {
     // Initialize row pins as inputs
+    wait_ms(500);
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         setPinInput(row_pins[row]);
-        // setPinInputLow(row_pins[row]);
-        // Since AVR has no internal pull-down resistors,
-        // physical 10k resistors are required on each row pin
+        setPinInputLow(row_pins[row]);
     }
 
     // Init latch pin
@@ -55,6 +46,7 @@ void matrix_init_custom(void) {
     //writePinLow(latch_pin);
 }
 
+#ifdef DEBUG_ENABLE
 void print_binary(uint16_t value, uint8_t bits) {
     for (int8_t i = bits - 1; i >= 0; i--) {
         if (value & (1 << i)) {
@@ -65,8 +57,10 @@ void print_binary(uint16_t value, uint8_t bits) {
     }
     xprintf("\n");
 }
+#endif
 
 static inline void write_to_cols_dynamic(uint8_t col) {
+    xprintf("write_to_cols_dynamic\n");
     uint8_t message[MATRIX_COLS_SHIFT_REGISTER_COUNT] = {0x00}; // Initialize all bits to '0'
 
     // Calculate which register should get the '1' and shift it accordingly
@@ -94,6 +88,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
     // Scan each column
     for (uint8_t col = 0; col < MATRIX_COLS; col++) {
+        xprintf("loop index: %d\n", col);
         write_to_cols_dynamic(col);
 
         // Move data from latch to shift register

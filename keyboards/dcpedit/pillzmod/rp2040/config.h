@@ -3,8 +3,10 @@
 
 #pragma once
 
+#define AUDIO_PIN GP12
+#define AUDIO_PWM_DRIVER PWMD6
 #define AUDIO_INIT_DELAY
-#define AUDIO_PIN B7
+#define AUDIO_PWM_CHANNEL RP2040_PWM_CHANNEL_A
 #define AUDIO_CLICKY
 #define AUDIO_CLICKY_FREQ_RANDOMNESS 1.5f
 
@@ -12,29 +14,26 @@
 #define STARTUP_SONG SONG(STARTUP_SOUND)
 #endif
 
-#define SOLENOID_PIN   B0
+#define SOLENOID_PIN   GP10
 
 // SPI configuration
 #define SPI_MATRIX_DIVISOR 16
 #define SPI_MODE 0
-//#define SPI_DRIVER SPID1 // you might change this
+#define SPI_DRIVER SPID0 // you might change this
 
 // GPIO config for main SPI config needs to match up with the SPI bus you are using
-//#define SPI_SCK_PIN  GPxx // e.g. SPI0 SCK
-//#define SPI_MOSI_PIN GPxx // e.g. SPI0 TX (Master Out, Slave In)
-//#define SPI_MISO_PIN GPxx // e.g. SPI0 RX (Master In, Slave Out)
-#ifdef SPI_MISO_PIN
-#undef SPI_MISO_PIN
-#endif
+#define SPI_SCK_PIN  GP22
+#define SPI_MOSI_PIN GP23
 #define SPI_MISO_PIN NO_PIN
 
 // GPIO config for CS/latch pins can be any GPIO
-#define SPI_MATRIX_LATCH_PIN B6
-#define SPI_MATRIX_CHIP_SELECT_PIN_COLS B0
+#define SPI_MATRIX_LATCH_PIN GP21
 
 // custom matrix config
 #define MATRIX_COLS_SHIFT_REGISTER_COUNT 1
 
 // LED for layer indicator
-#define LED_LAYER_PIN F0
-//#define DEBUG_ENABLE 1
+#define LED_LAYER_PIN GP16
+
+// Debug enable
+//#define DEBUG_ENABLE
