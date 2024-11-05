@@ -1,12 +1,12 @@
 {
-  "development_board": "elite_pi",
-  "indicators": {
-    "caps_lock": "GP13",
-    "num_lock": "GP14",
-    "scroll_lock": "GP15"
-  },
-  "matrix_pins":{
-    "cols": ["NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN"],
-    "rows": ["GP7", "GP8", "GP9", "GP20", "GP6", "GP26", "GP5", "GP3", "GP4", "GP1", "GP0", "GP2", "GP27", "GP29", "GP28"]
-  }
+    "development_board": "elite_pi",
+    "indicators": {
+        "caps_lock": "GP13",
+        "num_lock": "GP14",
+        "scroll_lock": "GP15"
+    },
+    "matrix_pins": {
+        "cols": ["NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN", "NO_PIN"],
+        "rows": ["GP7", "GP8", "GP9", "GP20", "GP6", "GP26", "GP5", "GP3", "GP4", "GP1", "GP0", "GP2", "GP27", "GP29", "GP28"]
+    }
 }

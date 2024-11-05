@@ -3,16 +3,20 @@
 Pillz Mod is a replacement PCB for the Kinesis Advantage/Contoured keyboard
 
 * Keyboard Maintainer: [dcpedit](https://github.com/dcpedit)
-* Hardware Supported: Blackpill STM32F411
+* Hardware Supported: Blackpill STM32F411, Pro Micro, Elite-Pi
 * Hardware Availability: https://github.com/dcpedit/pillzmod
 
 Make example for this keyboard (after setting up your build environment):
 
-    make dcpedit/pillzmod/standard:default
+    make dcpedit/pillzmod:default
 
-Make example for LCD display support
+Make example for Elite-Pi
 
-    make dcpedit/pillzmod/lcd:default
+    make dcpedit/pillzmod/rp2040:default
+
+Make example for blackpill
+
+    make dcpedit/pillzmod/blackpill:default
 
 Flashing example for this keyboard:
 
@@ -22,8 +26,7 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 
 ## Bootloader
 
-Enter the bootloader in 3 ways:
+Enter the bootloader in 2 ways:
 
-* **Bootmagic reset**: Hold down the left-most large key on the top row and plug in the keyboard
-* **Physical reset button**: On the PCB, while holding down the BOOT button, press and release the RESET button
+* **Physical reset button**: On the PCB, hold down reset while plugging in (Pro-Micro) or double-tap reset (rp2040)
 * **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available

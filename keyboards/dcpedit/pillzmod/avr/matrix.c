@@ -1,4 +1,6 @@
-#include "wait.h"  // Include QMK wait functions
+// Copyright 2025 Ming-Gih Lam (@dcpedit)
+// SPDX-License-Identifier: GPL-2.0-or-later
+#include "wait.h"
 #include "print.h"
 #include "quantum.h"
 #include "spi_master.h"
@@ -40,9 +42,11 @@ void matrix_init_custom(void) {
     // Initialize row pins as inputs
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         setPinInput(row_pins[row]);
+        /*
+         * Since AVR has no internal pull-down resistors,
+         * physical 10k resistors are required on each row pin
+         */
         // setPinInputLow(row_pins[row]);
-        // Since AVR has no internal pull-down resistors,
-        // physical 10k resistors are required on each row pin
     }
 
     // Init latch pin
@@ -51,10 +55,9 @@ void matrix_init_custom(void) {
 
     // Initialize shift register (for columns)
     spi_init();
-    //spi_start(SPI_MATRIX_CHIP_SELECT_PIN_COLS, true, SPI_MODE, SPI_MATRIX_DIVISOR);
-    //writePinLow(latch_pin);
 }
 
+#ifdef DEBUG_ENABLE
 void print_binary(uint16_t value, uint8_t bits) {
     for (int8_t i = bits - 1; i >= 0; i--) {
         if (value & (1 << i)) {
@@ -65,6 +68,7 @@ void print_binary(uint16_t value, uint8_t bits) {
     }
     xprintf("\n");
 }
+#endif
 
 static inline void write_to_cols_dynamic(uint8_t col) {
     uint8_t message[MATRIX_COLS_SHIFT_REGISTER_COUNT] = {0x00}; // Initialize all bits to '0'
@@ -76,21 +80,27 @@ static inline void write_to_cols_dynamic(uint8_t col) {
     // Set the correct bit in the appropriate shift register (set to '1')
     message[register_index] |= (1 << bit_position);
 
+#ifdef DEBUG_ENABLE
     // Output the contents of the message array
     xprintf("Message contents for col %d: ", col);
     for (uint8_t i = 0; i < MATRIX_COLS_SHIFT_REGISTER_COUNT; i++) {
         xprintf("0x%02X ", message[i]); // Output in hex format
     }
     xprintf("\n");
+#endif
 
     // Transmit the message to the SPI bus
+    spi_start(NO_PIN, true, SPI_MODE, SPI_MATRIX_DIVISOR);
     spi_transmit(message, MATRIX_COLS_SHIFT_REGISTER_COUNT);
+    spi_stop();
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     bool matrix_has_changed = false;
 
+#ifdef DEBUG_ENABLE
     xprintf("START scan ======================================\n");
+#endif
 
     // Scan each column
     for (uint8_t col = 0; col < MATRIX_COLS; col++) {
@@ -125,17 +135,15 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
 #ifdef DEBUG_ENABLE
     // Print column scan debug info
-    //xprintf("Col %u - Row state: ", col);
     xprintf("Current Matrix:\n");
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         print_binary(current_matrix[row], MATRIX_COLS);
     }
-#endif
 
     // Optional wait time in debug mode
-#ifdef DEBUG_ENABLE
     wait_ms(3000);
 #endif
+
 
     return matrix_has_changed;
 }

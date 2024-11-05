@@ -1,4 +1,4 @@
-// Copyright 2023 Ming-Gih Lam (@dcpedit)
+// Copyright 2025 Ming-Gih Lam (@dcpedit)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
@@ -15,11 +15,12 @@
 #endif
 
 #define SOLENOID_PIN   GP10
+#define NO_HAPTIC_MOD
 
 // SPI configuration
 #define SPI_MATRIX_DIVISOR 16
 #define SPI_MODE 0
-#define SPI_DRIVER SPID0 // you might change this
+#define SPI_DRIVER SPID0
 
 // GPIO config for main SPI config needs to match up with the SPI bus you are using
 #define SPI_SCK_PIN  GP22
@@ -34,6 +35,3 @@
 
 // LED for layer indicator
 #define LED_LAYER_PIN GP16
-
-// Debug enable
-//#define DEBUG_ENABLE

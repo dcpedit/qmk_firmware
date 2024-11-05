@@ -4,8 +4,8 @@
     "indicators": {
         "caps_lock": "B9",
         "num_lock": "A0",
-        "scroll_lock": "A1",
-        "on_state": 0
+        "on_state": 0,
+        "scroll_lock": "A1"
     },
     "matrix_pins": {
         "cols": ["A5", "C14", "C15", "A7", "B1", "A6", "B3"],
