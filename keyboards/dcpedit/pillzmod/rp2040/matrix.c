@@ -101,6 +101,9 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
         write_and_wait_for_pin(latch_pin, 1);
         write_and_wait_for_pin(latch_pin, 0);
 
+        // Allow row lines to settle after column transition
+        wait_us(10);
+
         // Read each row pin and update `current_matrix` directly
         for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
             bool row_value = readPin(row_pins[row]);
